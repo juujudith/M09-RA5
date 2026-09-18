@@ -44,7 +44,6 @@ public class Rot13 {
 
                         if (letra == letraArray) {
                             pos = j;
-
                             int posMas13 = (pos + 13) % majuscules.length;
                             char letraXifrada = majuscules[posMas13];
                             textXifrat = textXifrat + letraXifrada;
@@ -58,16 +57,14 @@ public class Rot13 {
                         char letraArray = minuscules[k];
 
                         if (letra == letraArray) {
-                            pos = k;
-                            
+                            pos = k;                           
                             int posMas13 = (pos + 13) % minuscules.length;
                             char letraXifrada = minuscules[posMas13];
                             textXifrat = textXifrat + letraXifrada;
                         }
                     }
                 } else {
-                    textXifrat = textXifrat + letra;
-                    
+                    textXifrat = textXifrat + letra;                   
                 }
         }
         return textXifrat;
@@ -88,7 +85,6 @@ public class Rot13 {
 
                         if (letra == letraArray) {
                             pos = j;
-
                             int posMas13 = (pos - 13 + majuscules.length) % majuscules.length;
                             char letraXifrada = majuscules[posMas13];
                             textDesxifrat = textDesxifrat + letraXifrada;
@@ -102,16 +98,14 @@ public class Rot13 {
                         char letraArray = minuscules[k];
 
                         if (letra == letraArray) {
-                            pos = k;
-                            
+                            pos = k;                            
                             int posMas13 = (pos - 13 + minuscules.length) % minuscules.length;
                             char letraXifrada = minuscules[posMas13];
                             textDesxifrat = textDesxifrat + letraXifrada;
                         }
                     }
                 } else {
-                    textDesxifrat = textDesxifrat + letra;
-                    
+                    textDesxifrat = textDesxifrat + letra;                   
                 }
         }
         return textDesxifrat;

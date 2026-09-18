@@ -5,40 +5,28 @@ public class Rot13 {
         public static char[] majuscules = {'A', 'Á', 'À', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'F', 'G', 'H', 'I', 'Í', 'Ì', 'Ï', 'J', 'K', 'L', 
                             'M', 'N', 'Ñ', 'O', 'Ó', 'Ò', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Ü', 'V', 'W', 'X', 'Y', 'Z'};
     public static void main(String[] args) {
-
-        String original1 = "ABC";
-        String frase1 = xifraRot13("ABC");
-        String original2 = "XYZ";
-        String frase2 = xifraRot13("XYZ");
-        String original3 = "Hola, Mr. calçot";
-        String frase3 = xifraRot13("Hola, Mr. calçot");
-        String original4 = "Perdó, per tu què és?";
-        String frase4 = xifraRot13("Perdó, per tu què és?"); 
-
-        String original5 = "IÏG";
-        String frase5 = desxifraRot13("IÏJ");
-        String original6 = "FGH";
-        String frase6 = desxifraRot13("FGH");
-        String original7 = "Òwúi, Ùa. jiúkwb";
-        String frase7 = desxifraRot13("Òwúi, Ùá. jiúkwb");
-        String original8 = "Zmálx, zmá bc acñ nà?";
-        String frase8 = desxifraRot13("Zmálx, zmá bc acñ nà?");
+        
+        String[] frases = {"ABC", "XYZ", "Hola, Mr. calçot", "Perdó, per tu què és?"};
+        String[] frasesXifrades = {"IÏJ", "FGH", "Òwúi, Ùá. jiúkwb", "Zmálx, zmá bc acñ nà?"};
 
         System.out.println("Xifrat");
-        System.out.println("----------");
-        System.out.println(original1 + "  => " + frase1);
-        System.out.println(original2 + "  => " + frase2);
-        System.out.println(original3 + "  => " + frase3);
-        System.out.println(original4 + "  => " + frase4);
+        System.out.println("---------");
+
+        for (int i = 0; i < frases.length; i++) {
+            String original = frases[i];
+            String xifrada = xifraRot13(original);
+            System.out.println(original + "  => " + xifrada);
+        }
+
         System.out.println();
-
         System.out.println("Desxifrat");
-        System.out.println("----------");
-        System.out.println(original5 + "  => " + frase5);
-        System.out.println(original6 + "  => " + frase6);
-        System.out.println(original7 + "  => " + frase7);
-        System.out.println(original8 + "  => " + frase8);
+        System.out.println("---------");
 
+        for (int i = 0; i < frasesXifrades.length; i++) {
+            String original = frasesXifrades[i];
+            String desxifrada = desxifraRot13(original);
+            System.out.println(original + "  => " + desxifrada);
+        }
     }
 
     public static String xifraRot13(String cadena) {

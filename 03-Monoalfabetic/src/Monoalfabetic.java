@@ -41,10 +41,33 @@ public class Monoalfabetic {
     }
 
     public static String xifraMonoAlfa(String cadena) {
-        // Pasar frase a mayúsculas
-        // Recorrer la frase, encontrar letra por letra en el array de mayúsculas
-        // Sustituir esa letra por la letra que está en la misma posición en el abecedario modificado
-        
+        String fraseXifrada = "";
+
+        for (int i = 0; i < cadena.length(); i++) {
+            char lletraFrase = cadena.charAt(i);
+
+            if (!Character.isLetter(lletraFrase)) {
+                fraseXifrada = fraseXifrada + lletraFrase;
+                continue;
+            }
+
+            boolean esMinuscula = Character.isLowerCase(lletraFrase);
+            char lletraBusqueda = Character.toUpperCase(lletraFrase);
+            
+            for (int j = 0; j < majuscules.length; j++) {
+                char lletraMajuscula = majuscules[j];
+                
+                if (lletraBusqueda == lletraMajuscula) {
+                    if (esMinuscula) {
+                        fraseXifrada = fraseXifrada + Character.toLowerCase(alfabetPermutat[j]);
+                    } else {
+                        fraseXifrada = fraseXifrada + alfabetPermutat[j];
+                    }
+                } 
+            }
+        }
+
+        return fraseXifrada;
     }
 
     public static String desxifraMonoAlfa(String cadena) {

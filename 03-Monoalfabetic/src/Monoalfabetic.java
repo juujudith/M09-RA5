@@ -11,12 +11,31 @@ public class Monoalfabetic {
     public static void main(String[] args) {
         
         String[] frases = {"àrbritre, coixí, Perímetre", "Taüll, DÍA, año", "Peça, Òrrius, Bòvila"};
+        String[] frasesXifrades = new String[frases.length];
         alfabetPermutat = permutaAlfabet(majuscules);
+
+        for (int i = 0; i < majuscules.length; i++) {
+            System.out.print(majuscules[i] + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < alfabetPermutat.length; i++) {
+            System.out.print(alfabetPermutat[i] + " ");
+        }
+        System.out.println();
 
         System.out.println("Xifratge:");
         for (int i = 0; i < frases.length; i++) {
-            String xifrada = xifraMonoAlfa(frases[i]);
-            System.out.println("Test 0" + (i+1) + " " + frases[i] + " -> " + xifrada);
+            String textComplet = "Test 0" + (i+1) + " " + frases[i];
+            String xifrada = xifraMonoAlfa(textComplet);
+            System.out.printf("%-35s -> %s%n", textComplet, xifrada);
+            frasesXifrades[i] = xifrada;
+        }
+
+        System.out.println("Desxifratge:");
+        for (int i = 0; i < frases.length; i++) {
+            String desxifrada = desxifraMonoAlfa(frasesXifrades[i]);
+            System.out.printf("%-35s -> %s%n", frasesXifrades[i], desxifrada);
         }
     }
 
@@ -71,12 +90,32 @@ public class Monoalfabetic {
     }
 
     public static String desxifraMonoAlfa(String cadena) {
+        String fraseDesxifrada = "";
 
+        for (int i = 0; i < cadena.length(); i++) {
+            char lletraFrase = cadena.charAt(i);
+
+            if (!Character.isLetter(lletraFrase)) {
+                fraseDesxifrada = fraseDesxifrada + lletraFrase;
+                continue;
+            }
+
+            boolean esMinuscula = Character.isLowerCase(lletraFrase);
+            char lletraBusqueda = Character.toUpperCase(lletraFrase);
+            
+            for (int j = 0; j < alfabetPermutat.length; j++) {
+                char lletraMajuscula = alfabetPermutat[j];
+                
+                if (lletraBusqueda == lletraMajuscula) {
+                    if (esMinuscula) {
+                        fraseDesxifrada = fraseDesxifrada + Character.toLowerCase(majuscules[j]);
+                    } else {
+                        fraseDesxifrada = fraseDesxifrada + majuscules[j];
+                    }
+                } 
+            }
+        }
+
+        return fraseDesxifrada;
     }
 }
-
-// Convertir de char[] a List(ArrayList)
-
-// Collections.shuffle(lista) (para la permutación)
-
-// Convertir de list a char[]

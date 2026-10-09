@@ -1,4 +1,9 @@
 import java.security.SecureRandom;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class AES {
 
@@ -44,33 +49,58 @@ public class AES {
         return iv;
     }
 
+    private static SecretKeySpec generaHash(String password) throws Exception {
+        MessageDigest md = MessageDigest.getInstance(ALGORISME_HASH);
+        byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
+        return new SecretKeySpec(hash, ALGORISME_XIFRAT);
+    }
     
     public static byte[] xifraAES(String msg, String password) throws Exception {
         
         // Obtenir els bytes de l'String
+        byte[] bMsg = msg.getBytes(StandardCharsets.UTF_8);
 
         // Genera IvParameterSpec
+        IvParameterSpec ivSpec = new IvParameterSpec(generaIv());
 
         // Genera hash
+        SecretKeySpec clau = generaHash(password);
 
         // Encrypt
+        Cipher cipher = Cipher.getInstance(FORMAT_AES);
+        cipher.init(Cipher.ENCRYPT_MODE, clau, ivSpec);
+        byte[] bXifrat = cipher.doFinal(bMsg);
 
         // Combinar IV i part xifrada
+        byte[] resultat = new byte[MIDA_IV + bXifrat.length];
+        System.arraycopy(iv, 0, resultat, 0, MIDA_IV);
+        System.arraycopy(bXifrat, 0, resultat, MIDA_IV, bXifrat.length);
 
         // return iv + msgxifrat
+        return resultat;
     }
 
     public static String desxifraAES(byte[] bMsgXifrat, String password) throws Exception {
         
         // Extreure l'IV
+        byte[] ivExtret = new byte[MIDA_IV];
+        System.arraycopy(bMsgXifrat, 0, ivExtret, 0, MIDA_IV);
 
         // Extreure la part xifrada
+        byte[] bXifrat = new byte[bMsgXifrat.length - MIDA_IV];
+        System.arraycopy(bMsgXifrat, MIDA_IV, bXifrat, 0, bXifrat.length);
 
         // Fer hash de la clau
+        SecretKeySpec clau = generaHash(password);
 
         // Desxifrar
+        IvParameterSpec ivSpec = new IvParameterSpec(ivExtret);
+        Cipher cipher = Cipher.getInstance(FORMAT_AES);
+        cipher.init(Cipher.DECRYPT_MODE, clau, ivSpec);
+        byte[] bDesxifrat = cipher.doFinal(bXifrat);
 
         // return String desxifrat
+        return new String(bDesxifrat, StandardCharsets.UTF_8);
     }
 
-}
+} 
